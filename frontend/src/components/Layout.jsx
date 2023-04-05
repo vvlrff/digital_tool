@@ -1,16 +1,13 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+
+import Header from './Header'
 
 import "./../assets/css/Layout.css"
 
 const Layout = () => {
   return (
     <>
-      <header>
-        <Link to='/'>Home </Link>
-        <Link to='/login'>Login </Link>
-        <Link to='/posts'>Posts </Link>
-        <Link to='/about'>About </Link>
-      </header>
+      <Header />
       <Outlet />
     </>
   )
