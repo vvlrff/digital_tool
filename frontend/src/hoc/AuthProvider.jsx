@@ -1,4 +1,5 @@
 import { createContext, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export const AuthContext = createContext()
 
@@ -7,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
   let [loading, setLoading] = useState(true)
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   let loginUser = async (e) => {
     e.preventDefault()
@@ -24,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data)
       setUser(jwt_decode(data.access))
       localStorage.setItem('authTokens', JSON.stringify(data))
-      history.push('/')
+      navigate('/')
     } else {
       alert('Something went wrong!')
     }
@@ -35,7 +36,7 @@ export const AuthProvider = ({ children }) => {
     setAuthTokens(null)
     setUser(null)
     localStorage.removeItem('authTokens')
-    history.push('/login')
+    navigate('/login')
   }
 
 

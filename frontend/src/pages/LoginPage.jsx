@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { AuthContext } from "../hoc/AuthProvider"
+import AuthContext from "../context/AuthContext"
 
 const LoginPage = () => {
 
@@ -19,4 +19,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export { LoginPage } 
