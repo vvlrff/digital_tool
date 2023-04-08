@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from './api/axios';
+import API from '../api/axios';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,24}$/;
@@ -44,6 +44,7 @@ const RegisterPage = () => {
   }, [user, pwd, matchPwd])
 
   const handleSubmit = async (e) => {
+    console.log(e)
     e.preventDefault();
     // if button enabled with JS hack
     const v1 = USER_REGEX.test(user);
@@ -53,13 +54,15 @@ const RegisterPage = () => {
       return;
     }
     try {
-      const response = await axios.post(REGISTER_URL,
+      /*
+      const response = await API.post(REGISTER_URL,
         JSON.stringify({ user, pwd }),
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true
         }
       );
+      */
       console.log(response?.data);
       console.log(response?.accessToken);
       console.log(JSON.stringify(response))

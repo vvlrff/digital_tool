@@ -9,14 +9,16 @@ import { LoginPage } from './pages/LoginPage'
 
 import Layout from './components/Layout'
 
-import { RequireAuth } from './hoc/RequireAuth'
-import { AuthProvider } from './hoc/AuthProvider'
+//import { RequireAuth } from './hoc/RequireAuth'
+import { AuthProvider } from './context/AuthProvider'
 
 import './App.css'
+import { RegisterPage } from './pages/RegisterPage'
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<Layout />}>
     <Route index element={<HomePage />} />
+    {/*
     <Route path='about/*' element={<AboutPage />}>
       <Route path='contacts' element={<p>Our contacts</p>} />
       <Route path='team' element={<p>Our team</p>} />
@@ -27,8 +29,9 @@ const router = createBrowserRouter(createRoutesFromElements(
         <SinglePage />
       </RequireAuth>
     } loader={postLoader} />
+    */}
     <Route path='login' element={<LoginPage />} />
-    <Route path='register' element={<LoginPage />} />
+    <Route path='register' element={<RegisterPage />} />
     <Route path='*' element={<NotFoundPage />} />
   </Route>
 ))
