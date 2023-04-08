@@ -28,6 +28,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       </RequireAuth>
     } loader={postLoader} />
     <Route path='login' element={<LoginPage />} />
+    <Route path='register' element={<LoginPage />} />
     <Route path='*' element={<NotFoundPage />} />
   </Route>
 ))
