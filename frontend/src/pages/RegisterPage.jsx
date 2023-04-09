@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 // import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from 'axios';
+import axios from '../api/axios';
 
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 // const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
-// const REGISTER_URL = '/api/users/';
+const REGISTER_URL = '/api/users/';
 
 const RegisterPage = () => {
   const userRef = useRef();
@@ -56,7 +56,7 @@ const RegisterPage = () => {
     //   setErrMsg("Invalid Entry");
     //   return;
     // }
-    await axios.post("http://127.0.0.1:8000/api/users/",
+    await axios.post(REGISTER_URL,
       { email, username, first_name, last_name, password }
     )
       .then(response => {

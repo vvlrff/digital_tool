@@ -6,14 +6,14 @@ import { HomePage } from './pages/HomePage'
 import { NotFoundPage } from './pages/NotFoundPage'
 // import { postLoader, SinglePage } from './pages/Dashboardpage'
 import { LoginPage } from './pages/LoginPage'
+import { RegisterPage } from './pages/RegisterPage'
 
 import Layout from './components/Layout'
 
 //import { RequireAuth } from './hoc/RequireAuth'
 import { AuthProvider } from './context/AuthProvider'
 
-import './App.css'
-import { RegisterPage } from './pages/RegisterPage'
+
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<Layout />}>
