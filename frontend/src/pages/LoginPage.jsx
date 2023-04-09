@@ -1,16 +1,15 @@
 import { useRef, useState, useEffect, useContext } from 'react';
 import { AuthContext } from "../context/AuthProvider";
 
-import API from '../api/axios';
-const LOGIN_URL = '/auth';
+import axios from 'axios';
 
 const LoginPage = () => {
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState('');
-  const [pwd, setPwd] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
@@ -20,28 +19,58 @@ const LoginPage = () => {
 
   useEffect(() => {
     setErrMsg('');
-  }, [user, pwd])
+  }, [email, password])
+
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   // if button enabled with JS hack
+  //   const v1 = USER_REGEX.test(username);
+  //   const v2 = PWD_REGEX.test(password);
+  //   if (!v1 || !v2) {
+  //     setErrMsg("Invalid Entry");
+  //     return;
+  //   }
+  //   await axios.post("http://127.0.0.1:8000/api/users/",
+  //     { email, username, first_name, last_name, password }
+  //   )
+  //     .then(response => {
+  //       console.log(response)
+  //       //console.log(JSON.stringify(response))
+  //       setSuccess(true);
+  //       //clear state and controlled inputs
+  //       setUser('');
+  //       setPassword('');
+  //       setMatchPassword('');
+  //     })
+  //     .catch(err => {
+  //       if (!err?.response) {
+  //         setErrMsg('No Server Response');
+  //       } else if (err.response?.status === 409) {
+  //         setErrMsg('Username Taken');
+  //       } else {
+  //         setErrMsg('Registration Failed')
+  //       }
+  //       errRef.current.focus();
+  //     })
+  // }
+
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      /*
-      const response = await axios.post(LOGIN_URL,
-        JSON.stringify({ user, pwd }),
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true
-        }
+      const response = await axios.post("http://127.0.0.1:8000/api/auth/token/login/",
+        { email, password }
       );
-      */
       console.log(JSON.stringify(response?.data));
       //console.log(JSON.stringify(response));
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-      setAuth({ user, pwd, roles, accessToken });
-      setUser('');
-      setPwd('');
+      const accessToken = response?.data?.auth_token;
+      setAuth({ email, password, accessToken });
+      setEmail('');
+      setPassword('');
       setSuccess(true);
     } catch (err) {
       if (!err?.response) {
@@ -64,7 +93,7 @@ const LoginPage = () => {
           <h1>You are logged in!</h1>
           <br />
           <p>
-            <a href="#">Go to Home</a>
+            <a href="/">Go to Home</a>
           </p>
         </section>
       ) : (
@@ -72,14 +101,14 @@ const LoginPage = () => {
           <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
           <h1>Sign In</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="email">Email:</label>
             <input
-              type="text"
-              id="username"
+              type="email"
+              id="email"
               ref={userRef}
               autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               required
             />
 
@@ -87,8 +116,8 @@ const LoginPage = () => {
             <input
               type="password"
               id="password"
-              onChange={(e) => setPwd(e.target.value)}
-              value={pwd}
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
               required
             />
             <button>Sign In</button>
@@ -97,7 +126,7 @@ const LoginPage = () => {
             Need an Account?<br />
             <span className="line">
               {/*put router link here*/}
-              <a href="#">Sign Up</a>
+              <a href="/register">Sign Up</a>
             </span>
           </p>
         </section>

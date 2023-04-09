@@ -1,10 +1,10 @@
 import { Route, createBrowserRouter, RouterProvider, createRoutesFromElements } from 'react-router-dom'
 
 import { HomePage } from './pages/HomePage'
-import { AboutPage } from './pages/AboutPage'
-import { postsLoader, PostsPage } from './pages/ApplyingPage'
+// import { AboutPage } from './pages/AboutPage'
+// import { postsLoader, PostsPage } from './pages/ApplyingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
-import { postLoader, SinglePage } from './pages/Dashboardpage'
+// import { postLoader, SinglePage } from './pages/Dashboardpage'
 import { LoginPage } from './pages/LoginPage'
 
 import Layout from './components/Layout'
