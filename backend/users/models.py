@@ -8,7 +8,18 @@ from rest_framework.authtoken.models import Token
 
 class User(AbstractUser):
     """Модель пользователя."""
+    EMPLOYER = 'employer'
+    USER = 'user'
 
+    ROLE = (
+        (USER, 'Аутентифицированный пользователь'),
+        (EMPLOYER, 'Работодатель'),
+    )
+    role = models.CharField('Роль',
+                            max_length=35,
+                            choices=ROLE,
+                            default=USER
+                            )
     username = models.CharField(max_length=150, unique=True,
                                 verbose_name='Логин')
     first_name = models.CharField(max_length=150, verbose_name='Имя')
@@ -35,6 +46,14 @@ class User(AbstractUser):
     @property
     def is_not_active(self):
         return (not self.is_active)
+
+    @property
+    def is_employer(self):
+        return self.role == self.EMPLOYER
+
+    @property
+    def is_user(self):
+        return self.role == self.USER
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

@@ -1,21 +1,10 @@
 from rest_framework import permissions
 
 
-class IsAuthorOrReadOnly(permissions.BasePermission):
+class EmployerOnly(permissions.BasePermission):
     def has_permission(self, request, view):
-        return (
-            request.method in permissions.SAFE_METHODS
-            or request.user.is_authenticated
-        )
+        if request.method in permissions.SAFE_METHODS:
+            return True
 
-    def has_object_permission(self, request, view, obj):
-        return (
-            request.method in permissions.SAFE_METHODS
-            or obj.author == request.user
-        )
-
-
-class UserPermission(permissions.BasePermission):
-
-    def has_object_permission(self, request, view, obj):
-        return request.user.is_authenticated
+        if request.user and request.user.is_employer:
+            return True
