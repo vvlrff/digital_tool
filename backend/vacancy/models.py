@@ -46,6 +46,23 @@ class Skills(models.Model):
         return self.name
 
 
+class Busyness(models.Model):
+    """Модель типа занятости."""
+
+    name = models.CharField(
+        verbose_name='Тип занятости',
+        max_length=100
+    )
+
+    class Meta:
+        verbose_name = 'Тип занятости'
+        verbose_name_plural = 'Типы занятости'
+        unique_together = ('name',)
+
+    def __str__(self):
+        return self.name
+
+
 class Vacancy(models.Model):
     """Модель вакансий."""
 
@@ -60,9 +77,8 @@ class Vacancy(models.Model):
         max_length=200,
         help_text='Введите название вакансии',
     )
-    image = models.ImageField(upload_to='', blank=True)
     text = models.TextField(
-        verbose_name='Текст вакансии',
+        verbose_name='Описание вакансии',
         help_text='Текстовое описание вакансии'
     )
     skills = models.ManyToManyField(
@@ -75,6 +91,11 @@ class Vacancy(models.Model):
         help_text='Введите размер заработной платы',
         validators=[
             MinValueValidator(1)]
+    )
+    busyness = models.ManyToManyField(
+        Busyness,
+        related_name='vacancy',
+        verbose_name='Тип занятости'
     )
     tags = models.ManyToManyField(
         Tag,

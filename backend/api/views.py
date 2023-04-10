@@ -9,7 +9,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from .filtersets import SkillsSearchFilter, VacancySearchFilter
 from .paginator import SixPagination
-from .permissions import EmployerOnly
+from .permissions import IsApplicantOrReadOnly
 from .serializers import (FavoriteSerializer, SkillsSerializer,
                           VacancyInListSerializer, VacancyViewSerializer,
                           VacancyWriteSerializer,
@@ -35,7 +35,7 @@ class SkillsViewSet(ReadOnlyModelViewSet):
 class VacancyViewSet(viewsets.ModelViewSet):
     """API вакансий"""
     queryset = Vacancy.objects.all().order_by('-id')
-    permission_classes = (EmployerOnly,)
+    permission_classes = (IsApplicantOrReadOnly,)
     pagination_class = SixPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = VacancySearchFilter

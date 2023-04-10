@@ -1,9 +1,8 @@
-from vacancy.models import (Favorite, Skills, Vacancy,
-                            Tag)
+from vacancy.models import (Busyness, Favorite, Skills,
+                            Vacancy, Tag)
 from rest_framework import serializers
 from users.serializers import UserSerializer
 
-from .utils.base64 import Base64ImageField
 from .utils.hex import Hex2NameColor
 
 
@@ -29,11 +28,25 @@ class SkillsSerializer(serializers.ModelSerializer):
         return self.name
 
 
+class BusynessSerializer(serializers.ModelSerializer):
+    """Сериализатор навыков."""
+    class Meta:
+        model = Busyness
+        fields = ('id', 'name',)
+
+    def __str__(self):
+        return self.name
+
+
 class VacancyViewSerializer(serializers.ModelSerializer):
     """Сериализатор просмотра вакансий."""
     author = UserSerializer(read_only=True)
     tags = TagSerializer(many=True, read_only=True)
     skills = SkillsSerializer(
+        many=True,
+        read_only=True
+    )
+    busyness = BusynessSerializer(
         many=True,
         read_only=True
     )
@@ -62,16 +75,19 @@ class VacancyWriteSerializer(serializers.ModelSerializer):
         queryset=Tag.objects.all(),
         many=True
     )
-    image = Base64ImageField(use_url=True,)
     skills = serializers.PrimaryKeyRelatedField(
         queryset=Skills.objects.all(),
+        many=True
+    )
+    busyness = serializers.PrimaryKeyRelatedField(
+        queryset=Busyness.objects.all(),
         many=True
     )
 
     class Meta:
         model = Vacancy
         fields = (
-            'skills', 'tags', 'image',
+            'skills', 'tags', 'busyness',
             'name', 'text', 'salary',
         )
 
@@ -79,10 +95,11 @@ class VacancyWriteSerializer(serializers.ModelSerializer):
         vacancy = Vacancy.objects.create(
             author=self.context.get('request').user,
             name=validated_data.pop('name'),
-            image=validated_data.pop('image'),
             text=validated_data.pop('text'),
             salary=validated_data.pop('salary')
         )
+        busyness = validated_data.pop('busyness')
+        vacancy.busyness.set(busyness)
         skills = validated_data.pop('skills')
         vacancy.skills.set(skills)
         tags = validated_data.pop('tags')
@@ -91,11 +108,12 @@ class VacancyWriteSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
-        instance.image = validated_data.get('image', instance.image)
         instance.text = validated_data.get('text', instance.text)
         instance.salary = validated_data.get(
             'salary', instance.salary
         )
+        busyness = validated_data.pop('busyness')
+        instance.busyness.set(busyness)
         skills = validated_data.pop('skills')
         instance.skills.set(skills)
         tags = validated_data.pop('tags')

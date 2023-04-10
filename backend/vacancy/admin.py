@@ -1,6 +1,6 @@
 from django.contrib import admin
-from vacancy.models import (Favorite, Skills, Vacancy,
-                            Tag)
+from vacancy.models import (Busyness, Favorite, Skills, 
+                            Vacancy, Tag)
 
 
 class SkillsAdmin(admin.ModelAdmin):
@@ -23,6 +23,14 @@ class VacancyAdmin(admin.ModelAdmin):
         return favorite.count()
 
 
+class BusynessAdmin(admin.ModelAdmin):
+    """Админ-панель типа занятости."""
+    list_display = ('name',)
+    list_filter = ('name',)
+    search_fields = ('name',)
+    empty_value_display = '-пусто-'
+
+
 class TagAdmin(admin.ModelAdmin):
     """Админ-панель тэгов."""
     list_display = ('slug', 'name', 'color')
@@ -37,6 +45,7 @@ class FavoriteAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
+admin.site.register(Busyness, BusynessAdmin)
 admin.site.register(Favorite, FavoriteAdmin)
 admin.site.register(Skills, SkillsAdmin)
 admin.site.register(Vacancy, VacancyAdmin)

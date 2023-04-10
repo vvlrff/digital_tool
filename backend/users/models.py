@@ -9,16 +9,16 @@ from rest_framework.authtoken.models import Token
 class User(AbstractUser):
     """Модель пользователя."""
     EMPLOYER = 'employer'
-    USER = 'user'
+    APPLICANT = 'applicant'
 
     ROLE = (
-        (USER, 'Аутентифицированный пользователь'),
+        (APPLICANT, 'Соискатель'),
         (EMPLOYER, 'Работодатель'),
     )
     role = models.CharField('Роль',
                             max_length=35,
                             choices=ROLE,
-                            default=USER
+                            default=APPLICANT
                             )
     username = models.CharField(max_length=150, unique=True,
                                 verbose_name='Логин')
@@ -52,8 +52,8 @@ class User(AbstractUser):
         return self.role == self.EMPLOYER
 
     @property
-    def is_user(self):
-        return self.role == self.USER
+    def is_applicant(self):
+        return self.role == self.APPLICANT
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
