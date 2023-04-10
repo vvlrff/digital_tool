@@ -13,15 +13,31 @@ body {
   margin: 0;
 }
 
+h1 {
+  font-weight: 900;
+  font-size: 28px;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+.margin-top {
+  margin-top: 10vh;
+}
+
 section {
-  width: 100%;
-  max-width: 420px;
-  min-height: 400px;
+  color: #ffffff;
+  margin-top: 5vh;
+  width: 30vw;
+  max-height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 1rem;
-  background-color: rgba(0,0,0,0.4);
+  background: #272727;
+  border-radius: 10px;
 }
 
 form {
@@ -33,6 +49,7 @@ form {
 }
 
 input[type="text"],
+input[type="email"],
 input[type="password"],
 button,
 textarea {
@@ -40,6 +57,11 @@ font-family: 'Nunito', sans-serif;
 font-size: 22px;
 padding: 0.25rem;
 border-radius: 0.5rem;
+}
+
+label {
+  font-size: 18px;
+  font-weight: 500;
 }
 
 label,

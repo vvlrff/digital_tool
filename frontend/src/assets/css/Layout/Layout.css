@@ -1,7 +1,7 @@
 header {
     margin-top: 3vh;
     z-index: 10;
-    background-color: #f7f6f6;
+    background-color: #e7e7e7;
     width: 96vw;
     height: 7vh;
     display: flex;
@@ -50,7 +50,6 @@ header {
     justify-content: center;
     align-items: center;
     border-radius: 7px;
-
 }
 
 span {
