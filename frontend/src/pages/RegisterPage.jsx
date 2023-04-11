@@ -125,10 +125,10 @@ const RegisterPage = () => {
                 onChange={(e) => setUser(e.target.value)}
                 value={username}
                 required
-                // aria-invalid={validName ? "false" : "true"}
-                // aria-describedby="uidnote"
-                // onFocus={() => setUserFocus(true)}
-                // onBlur={() => setUserFocus(false)}
+              // aria-invalid={validName ? "false" : "true"}
+              // aria-describedby="uidnote"
+              // onFocus={() => setUserFocus(true)}
+              // onBlur={() => setUserFocus(false)}
               />
               {/* <p id="uidnote" className={userFocus && username && !validName ? "instructions" : "offscreen"}>
                 <FontAwesomeIcon icon={faInfoCircle} />
@@ -164,7 +164,11 @@ const RegisterPage = () => {
               <label htmlFor="role">
                 Роль:
               </label>
-              <select id="role" onChange={e => setRole(e.target.value)} value={role}>
+              <select
+                id="role"
+                onChange={e => setRole(e.target.value)}
+                value={role}
+              >
                 <option value="employer">Я работодатель</option>
                 <option value="applicant">Я ищу работу</option>
               </select>
