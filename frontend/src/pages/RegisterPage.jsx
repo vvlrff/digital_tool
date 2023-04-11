@@ -13,6 +13,7 @@ const RegisterPage = () => {
   const errRef = useRef();
 
   const [email, setEmail] = useState('');
+  const [role, setRole] = useState('');
   const [first_name, setFirst_name] = useState('');
   const [last_name, setLast_name] = useState('');
 
@@ -58,7 +59,7 @@ const RegisterPage = () => {
       return;
     }
     await axios.post(REGISTER_URL,
-      { email, username, first_name, last_name, password }
+      { email, username, first_name, last_name, password, role }
     )
       .then(response => {
         console.log(response)
@@ -159,6 +160,15 @@ const RegisterPage = () => {
                 value={last_name}
                 required
               />
+
+              <label htmlFor="role">
+                Роль:
+              </label>
+              <select id="role" onChange={e => setRole(e.target.value)} value={role}>
+                <option value="employer">Я работодатель</option>
+                <option value="applicant">Я ищу работу</option>
+              </select>
+
 
               <label htmlFor="password">
                 Пароль:
