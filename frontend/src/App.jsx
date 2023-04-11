@@ -12,6 +12,7 @@ import Layout from './components/Layout'
 
 //import { RequireAuth } from './hoc/RequireAuth'
 import { AuthProvider } from './context/AuthProvider'
+import FeaturesPage from './pages/FeaturesPage/FeaturesPage'
 
 
 
@@ -32,6 +33,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     */}
     <Route path='login' element={<LoginPage />} />
     <Route path='register' element={<RegisterPage />} />
+    <Route path='features' element={<FeaturesPage />} />
     <Route path='*' element={<NotFoundPage />} />
   </Route>
 ))

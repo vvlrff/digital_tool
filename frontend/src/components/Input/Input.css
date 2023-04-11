@@ -1,0 +1,7 @@
+.customInput {
+    width: 100%;
+}
+
+.customInput.customInput_error {
+    border-color: red;
+}

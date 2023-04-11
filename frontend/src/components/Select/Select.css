@@ -1,0 +1,35 @@
+.selectWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkboxGroup__title {
+    font-size: 21px;
+    font-weight: 500;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.checkboxGroup__list {
+    display: flex;
+    flex-direction: column;
+    height: 0px;
+    overflow: hidden;
+    transition: .24s;
+    border: 2px dashed;
+}
+
+.checkboxGroup__item {
+    display: flex;
+    gap: 10px;
+}
+
+.checkboxGroup__label {
+    user-select: none;
+}
+
+.checkboxGroup > .checkboxGroup__list_open {
+    height: 200px;
+    overflow-y: scroll;
+    transition: .24s;
+}
