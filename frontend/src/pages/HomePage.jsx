@@ -1,6 +1,10 @@
+import '../assets/css/HomePage/HomePage.css';
+
 const HomePage = () => {
   return (
-    <h1>Home Page</h1>
+    <div className="home-page home-page-flex">
+      <h1>Страница на которой будет что-то написано, но пока что так</h1>
+    </div>
   )
 }
 

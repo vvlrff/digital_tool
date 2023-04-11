@@ -1,32 +1,119 @@
-:root {
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(34, 34, 34, 0.87);
-  background-color: #ffffff;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
 a {
   font-weight: 500;
-  color: #646cff;
   text-decoration: inherit;
 }
-a:hover {
+
+/* a:hover {
   color: #3f4164;
-}
+} */
 
 body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
   min-height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: 28px;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+.margin-top {
+  margin-top: 10vh;
+}
+
+section {
+  color: #ffffff;
+  margin-top: 5vh;
+  width: 30vw;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem;
+  background: #272727;
+  border-radius: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+button,
+textarea {
+font-family: 'Nunito', sans-serif;
+font-size: 22px;
+padding: 0.25rem;
+border-radius: 0.5rem;
+}
+
+label {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+label,
+button {
+margin-top: 1rem;
+}
+
+button {
+padding: 0.5rem;
+}
+
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.instructions > svg {
+  margin-right: 0.25rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.hide {
+  display: none;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.25rem;
+}
+
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.line {
+  display: inline-block;
 }

@@ -1,0 +1,18 @@
+.home-page {
+    height: 80vh;
+    width: 96vw;
+    background: #272727;
+    border-radius: 20px;
+    margin-left: 2vw;
+    color: #ffffff;
+    margin-top: 5vh;
+}
+
+.home-page-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+

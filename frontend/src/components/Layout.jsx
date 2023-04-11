@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 
 import Header from './Header'
 
-import "./../assets/css/Layout.css"
+import "./../assets/css/Layout/Layout.css"
 
 const Layout = () => {
   return (
