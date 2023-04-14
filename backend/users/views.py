@@ -6,6 +6,8 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
+from djoser import utils
+from djoser.conf import settings
 
 from .models import User
 from .permissions import UserPermission
@@ -55,9 +57,18 @@ class TokenCreateNonBlockedUserView(TokenCreateView):
     permission_classes = (AllowAny, )
 
     def _action(self, serializer):
+        token = utils.login_user(self.request, serializer.user)
+        token_serializer_class = settings.SERIALIZERS.token
+        content = {
+            'Token': token_serializer_class(token).data["auth_token"],
+            'promptmsg': self.request.user.role,
+        }
         if serializer.user.is_not_active:
             return Response(
                 {'errors': USER_BLOCKED},
                 status=HTTP_400_BAD_REQUEST,
             )
-        return super()._action(serializer)
+        return Response(
+            data=content,
+            status=status.HTTP_200_OK,
+        )
