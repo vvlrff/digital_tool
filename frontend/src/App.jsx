@@ -1,6 +1,6 @@
 import { Route, createBrowserRouter, RouterProvider, createRoutesFromElements } from 'react-router-dom'
 
-import { HomePage } from './pages/HomePage'
+import { HomePage } from "./pages/HomePage"
 // import { AboutPage } from './pages/AboutPage'
 // import { postsLoader, PostsPage } from './pages/ApplyingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
@@ -8,7 +8,7 @@ import { NotFoundPage } from './pages/NotFoundPage'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 
-import Layout from './components/Layout'
+import { Layout } from './components/Layout'
 
 //import { RequireAuth } from './hoc/RequireAuth'
 import { AuthProvider } from './context/AuthProvider'

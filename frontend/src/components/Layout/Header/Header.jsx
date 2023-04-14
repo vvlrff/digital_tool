@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom"
 //import { useContext } from "react"
 
-const Header = () => {
+export const Header = () => {
   //  let { user, logoutUser } = useContext(AuthContext)
 
   return (
     <header>
       <Link to='/' className="home-link black">
         <div className="flex">
-          <img src="src/assets/images/sberbank-svgrepo-com.svg" alt="logo" className="header-logo"></img>
+          <img src="src/assets/icons/sberbank-svgrepo-com.svg" alt="logo" className="header-logo"></img>
           <span>Подбор персонала</span>
         </div>
       </Link>
@@ -40,5 +40,3 @@ const Header = () => {
     </header >
   )
 }
-
-export default Header

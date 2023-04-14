@@ -1,0 +1,30 @@
+.customInput {
+    display: flex;
+    flex-direction: column;
+}
+
+.customInput__field {
+    padding-left: 6px;
+    height: 40px;
+    border-radius: 6px;
+    font-size: 1em;
+    border: 1px solid #c0c5ce;
+    background-color: #343d46;
+    color: #fafafa;
+}
+
+.customInput__field::placeholder {
+    color: #c0c5ce;
+    font-size: .875em;
+}
+
+.customInput__title {
+    font-size: 1em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #c0c5ce;
+}
+
+.customInput__field.customInput_error {
+    border-color: red;
+}

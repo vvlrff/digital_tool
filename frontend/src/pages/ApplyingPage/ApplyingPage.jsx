@@ -1,9 +1,9 @@
 import { Link, useSearchParams, useLoaderData } from "react-router-dom"
 import axios from 'axios'
 
-import { BlogFilter } from "../components/BlogFilter"
+import { BlogFilter } from "../../components/BlogFilter"
 
-import '../assets/css/PostsPage.css'
+import '../ApplyingPage.css'
 
 const PostsPage = () => {
   const posts = useLoaderData()
@@ -33,10 +33,12 @@ const PostsPage = () => {
   )
 }
 
-const postsLoader = async () => {
+export const postsLoader = async () => {
   const res = await axios.get('https://jsonplaceholder.typicode.com/posts')
 
   return res.data
 }
 
-export { PostsPage, postsLoader }
+export { postsLoader }
+
+export default PostsPage
