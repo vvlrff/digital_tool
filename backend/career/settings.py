@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'api.apps.ApiConfig',
     'vacancy.apps.VacancyConfig',
+    'tests.apps.TestsConfig',
 ]
 
 MIDDLEWARE = [

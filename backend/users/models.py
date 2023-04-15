@@ -8,12 +8,12 @@ from rest_framework.authtoken.models import Token
 
 class User(AbstractUser):
     """Модель пользователя."""
-    EMPLOYER = 'employer'
     APPLICANT = 'applicant'
+    RECRUITER = 'recruiter'
 
     ROLE = (
         (APPLICANT, 'Соискатель'),
-        (EMPLOYER, 'Работодатель'),
+        (RECRUITER, 'Рекрутер'),
     )
     role = models.CharField('Роль',
                             max_length=35,
@@ -49,7 +49,7 @@ class User(AbstractUser):
 
     @property
     def is_employer(self):
-        return self.role == self.EMPLOYER
+        return self.role == self.RECRUITER
 
     @property
     def is_applicant(self):
