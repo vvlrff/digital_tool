@@ -1,32 +1,65 @@
-from django.conf import settings
 from django.db import models
+from django.core.exceptions import ValidationError
+
+
+def validateQuestionType(value):
+    if value not in ['TEXT', 'CHOICE', 'MULTIPLE_CHOICE']:
+        raise ValidationError('Invalid question type')
+
+
+OPTION_TYPES = ['CHOICE', 'MULTIPLE_CHOICE']
+
+
+class Poll(models.Model):
+    'Опрос'
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=300)
+    startDate = models.DateField()
+    finishDate = models.DateField()
 
 
 class Question(models.Model):
-    title = models.CharField(max_length=4096)
-    visible = models.BooleanField(default=False)
+    'Вопрос'
+    poll = models.ForeignKey('Poll', on_delete=models.CASCADE)
+    type = models.CharField(max_length=30, validators=[validateQuestionType])
+    text = models.CharField(max_length=300)
+    points = models.FloatField()
+
+    @property
+    def hasOptionType(self):
+        return self.type in OPTION_TYPES
+
+
+class Option(models.Model):
+    'Вариант ответа'
+    question = models.ForeignKey('Question', on_delete=models.CASCADE)
+    index = models.PositiveIntegerField()
+    text = models.CharField(max_length=100)
     max_points = models.FloatField()
 
-    def __str__(self):
-        return self.title
 
+class Submission(models.Model):
+    'Заполненный опрос'
+    user_id = models.IntegerField(db_index=True)
+    poll = models.ForeignKey('Poll', on_delete=models.CASCADE)
+    submitTime = models.DateTimeField(auto_now_add=True)
 
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.DO_NOTHING)
-    title = models.CharField(max_length=4096)
-    points = models.FloatField()
-    lock_other = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.title
+# При записи ответа на вопрос мы копируем тип и текст вопроса.
+# Также копируется текст вариантов ответа (для соотв. вопросов).
+# Это позволит сохранить вопросы и варианты ответов такими,
+# какими они были на момент прохождения опроса.
 
 
 class Answer(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.DO_NOTHING)
-    question = models.ForeignKey(Question, on_delete=models.DO_NOTHING)
-    choice = models.ForeignKey(Choice, on_delete=models.DO_NOTHING)
-    created = models.DateTimeField(auto_now_add=True)
+    'Ответ на вопрос'
+    submission = models.ForeignKey('Submission', on_delete=models.CASCADE)
+    question = models.ForeignKey('Question', on_delete=models.CASCADE)
+    questionType = models.CharField(max_length=30,
+                                    validators=[validateQuestionType])
+    questionText = models.CharField(max_length=300)
+    answerText = models.CharField(max_length=300)
 
-    def __str__(self):
-        return self.choice.title
+
+# Обновить структуру таблиц:
+# python manage.py makemigrations backend
+# python manage.py migrate

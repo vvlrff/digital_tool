@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from vacancy.models import Skills, Vacancy
+from vacancy.models import Skills, Vacancy, Busyness
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -12,7 +12,7 @@ from .paginator import SixPagination
 from .permissions import IsApplicantOrReadOnly
 from .serializers import (FavoriteSerializer, SkillsSerializer,
                           VacancyInListSerializer, VacancyViewSerializer,
-                          VacancyWriteSerializer)
+                          VacancyWriteSerializer, BusynessSerializer)
 
 
 class SkillsViewSet(ReadOnlyModelViewSet):
@@ -22,6 +22,14 @@ class SkillsViewSet(ReadOnlyModelViewSet):
     pagination_class = None
     filter_backends = (DjangoFilterBackend,)
     filterset_class = SkillsSearchFilter
+
+
+class BusynessViewSet(ReadOnlyModelViewSet):
+    """API занятости."""
+    queryset = Busyness.objects.all()
+    serializer_class = BusynessSerializer
+    pagination_class = None
+    filter_backends = (DjangoFilterBackend,)
 
 
 class VacancyViewSet(viewsets.ModelViewSet):

@@ -1,34 +1,56 @@
 from django.contrib import admin
-from .models import Question, Answer, Choice
+from .models import Question, Answer, Poll, Option, Submission
 
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = (
-        'title',
-        'visible',
-        'max_points',
+        'poll',
+        'type',
+        'text',
+        'points',
     )
 
 
-class ChoiceAdmin(admin.ModelAdmin):
+class PollAdmin(admin.ModelAdmin):
     list_display = (
-        'title',
+        'name',
+        'description',
+        'startDate',
+        'finishDate',
+    )
+
+
+class OptionAdmin(admin.ModelAdmin):
+    list_display = (
         'question',
-        'points',
-        'lock_other',
+        'index',
+        'text',
+        'max_points',
     )
     list_filter = ('question',)
 
 
 class AnswerAdmin(admin.ModelAdmin):
     list_display = (
-        'user',
+        'submission',
         'question',
-        'choice',
+        'questionType',
+        'questionText',
+        'answerText',
     )
-    list_filter = ('user',)
+    list_filter = ('submission',)
+
+
+class SubmissionAdmin(admin.ModelAdmin):
+    list_display = (
+        'user_id',
+        'poll',
+        'submitTime',
+    )
 
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Choice, ChoiceAdmin)
+admin.site.register(Option, OptionAdmin)
+admin.site.register(Submission, SubmissionAdmin)
+admin.site.register(Poll, PollAdmin)
 admin.site.register(Answer, AnswerAdmin)

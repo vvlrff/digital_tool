@@ -1,47 +1,43 @@
 from rest_framework import serializers
-from .models import Answer, Question, Choice
+from rest_framework.serializers import ValidationError
 
 
-class ChoiceSerializer(serializers.ModelSerializer):
-    percent = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Choice
-        fields = ['pk', 'title', 'points', 'percent', 'lock_other', ]
-
-    def get_percent(self, obj):
-        total = Answer.objects.filter(question=obj.question).count()
-        current = Answer.objects.filter(question=obj.question, choice=obj).count()
-        if total != 0:
-            return float(current * 100 / total)
-        else:
-            return float(0)
+def validateQuestionType(value):
+    if value not in ['TEXT', 'CHOICE', 'MULTIPLE_CHOICE']:
+        raise ValidationError('Invalid question type')
 
 
-class QuestionSerializer(serializers.ModelSerializer):
-    choices = ChoiceSerializer(many=True, source='choice_set', )
+class PollSerializer(serializers.Serializer):
+    'Опрос'
+    id = serializers.IntegerField(required=False)
+    name = serializers.CharField(max_length=100)
+    description = serializers.CharField(max_length=300)
+    startDate = serializers.DateField()
+    finishDate = serializers.DateField()
 
-    class Meta:
-        model = Question
-        fields = ['pk', 'title', 'choices', 'max_points', ]
+
+class QuestionSerializer(serializers.Serializer):
+    'Вопрос'
+    id = serializers.IntegerField(required=False)
+    type = serializers.CharField(max_length=30,
+                                 validators=[validateQuestionType])
+    text = serializers.CharField(max_length=300)
 
 
-class AnswerSerializer(serializers.Serializer):
-    answers = serializers.JSONField()
+class OptionSerializer(serializers.Serializer):
+    'Вариант ответа'
+    id = serializers.IntegerField(required=False)
+    index = serializers.IntegerField(required=False)
+    text = serializers.CharField(max_length=100)
 
-    def validate_answers(self, answers):
-        if not answers:
-            raise serializers.Validationerror("Answers must be not null.")
-        return answers
 
-    def save(self):
-        answers = self.data['answers']
-        user = self.context.user
-        for question_id, in answers:  # тут наверное лишняя запятая , ошибка в оригинальном коде
-            question = Question.objects.get(pk=question_id)
-            choices = answers[question_id]
-            for choice_id in choices:
-                choice = Choice.objects.get(pk=choice_id)
-                Answer(user=user, question=question, choice=choice).save()
-                user.is_answer = True
-                user.save()
+class UserOptionSerializer(serializers.Serializer):
+    'Вариант ответа для пользователя'
+    index = serializers.IntegerField()
+    text = serializers.CharField(max_length=100)
+
+
+class SubmissionSerializer(serializers.Serializer):
+    'Заполненный опрос'
+    id = serializers.IntegerField()
+    submitTime = serializers.DateTimeField(format='%Y-%m-%dT%H:%M:%S')
