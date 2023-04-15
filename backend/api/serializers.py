@@ -1,21 +1,7 @@
 from vacancy.models import (Busyness, Favorite, Skills,
-                            Vacancy, Tag)
+                            Vacancy)
 from rest_framework import serializers
 from users.serializers import UserSerializer
-
-from .utils.hex import Hex2NameColor
-
-
-class TagSerializer(serializers.ModelSerializer):
-    """Сериализатор тэгов."""
-    color = Hex2NameColor()
-
-    class Meta:
-        model = Tag
-        fields = ('id', 'name', 'color', 'slug')
-
-    def __str__(self):
-        return self.name
 
 
 class SkillsSerializer(serializers.ModelSerializer):
@@ -41,7 +27,6 @@ class BusynessSerializer(serializers.ModelSerializer):
 class VacancyViewSerializer(serializers.ModelSerializer):
     """Сериализатор просмотра вакансий."""
     author = UserSerializer(read_only=True)
-    tags = TagSerializer(many=True, read_only=True)
     skills = SkillsSerializer(
         many=True,
         read_only=True
@@ -71,10 +56,6 @@ class VacancyViewSerializer(serializers.ModelSerializer):
 
 class VacancyWriteSerializer(serializers.ModelSerializer):
     """Сериализатор добавления/обновления вакансий."""
-    tags = serializers.PrimaryKeyRelatedField(
-        queryset=Tag.objects.all(),
-        many=True
-    )
     skills = serializers.PrimaryKeyRelatedField(
         queryset=Skills.objects.all(),
         many=True
@@ -87,7 +68,7 @@ class VacancyWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vacancy
         fields = (
-            'skills', 'tags', 'busyness',
+            'skills', 'busyness',
             'name', 'text', 'salary',
         )
 
@@ -102,8 +83,6 @@ class VacancyWriteSerializer(serializers.ModelSerializer):
         vacancy.busyness.set(busyness)
         skills = validated_data.pop('skills')
         vacancy.skills.set(skills)
-        tags = validated_data.pop('tags')
-        vacancy.tags.set(tags)
         return vacancy
 
     def update(self, instance, validated_data):
@@ -116,8 +95,6 @@ class VacancyWriteSerializer(serializers.ModelSerializer):
         instance.busyness.set(busyness)
         skills = validated_data.pop('skills')
         instance.skills.set(skills)
-        tags = validated_data.pop('tags')
-        instance.tags.set(tags)
         instance.save()
         return instance
 

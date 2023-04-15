@@ -7,7 +7,6 @@ app_name = 'api'
 
 router = DefaultRouter()
 
-router.register('tags', views.TagViewSet, basename='tags')
 router.register('skills', views.SkillsViewSet, basename='skills')
 router.register('vacancy', views.VacancyViewSet, basename='vacancy')
 

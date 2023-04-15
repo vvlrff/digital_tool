@@ -3,32 +3,6 @@ from django.db import models
 from users.models import User
 
 
-class Tag(models.Model):
-    """Модель тэгов."""
-
-    name = models.CharField(
-        verbose_name='Название тега',
-        max_length=50,
-        unique=True
-    )
-    color = models.CharField(
-        verbose_name='Цветовой HEX-код тега',
-        max_length=8,
-        unique=True
-    )
-    slug = models.SlugField(
-        unique=True,
-        verbose_name='Slug тега'
-    )
-
-    class Meta:
-        verbose_name = 'Тег'
-        verbose_name_plural = 'Теги'
-
-    def __str__(self):
-        return self.name
-
-
 class Skills(models.Model):
     """Модель навыков."""
 
@@ -96,11 +70,6 @@ class Vacancy(models.Model):
         Busyness,
         related_name='vacancy',
         verbose_name='Тип занятости'
-    )
-    tags = models.ManyToManyField(
-        Tag,
-        related_name='vacancy',
-        verbose_name='Теги вакансии'
     )
     pub_date = models.DateTimeField(auto_now_add=True)
 

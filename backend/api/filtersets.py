@@ -18,7 +18,6 @@ class SkillsSearchFilter(FilterSet):
 class VacancySearchFilter(FilterSet):
     """Фильтрсет вакансий."""
     is_favorited = BooleanFilter(method='filter_is_favorited')
-    tags = AllValuesMultipleFilter(field_name='tags__slug')
     author = ModelChoiceFilter(queryset=User.objects.all())
 
     def filter_is_favorited(self, queryset, name, value):
@@ -30,7 +29,6 @@ class VacancySearchFilter(FilterSet):
     class Meta:
         model = Vacancy
         fields = [
-            'tags__slug',
             'author',
             'is_favorited',
         ]

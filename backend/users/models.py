@@ -48,7 +48,7 @@ class User(AbstractUser):
         return (not self.is_active)
 
     @property
-    def is_employer(self):
+    def is_recruiter(self):
         return self.role == self.RECRUITER
 
     @property

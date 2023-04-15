@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from vacancy.models import Skills, Vacancy, Tag
+from vacancy.models import Skills, Vacancy
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -12,15 +12,7 @@ from .paginator import SixPagination
 from .permissions import IsApplicantOrReadOnly
 from .serializers import (FavoriteSerializer, SkillsSerializer,
                           VacancyInListSerializer, VacancyViewSerializer,
-                          VacancyWriteSerializer,
-                          TagSerializer)
-
-
-class TagViewSet(ReadOnlyModelViewSet):
-    """API тэгов."""
-    queryset = Tag.objects.all()
-    pagination_class = None
-    serializer_class = TagSerializer
+                          VacancyWriteSerializer)
 
 
 class SkillsViewSet(ReadOnlyModelViewSet):
