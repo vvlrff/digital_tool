@@ -70,11 +70,13 @@ class VacancyWriteSerializer(serializers.ModelSerializer):
         fields = (
             'skills', 'busyness',
             'name', 'text', 'salary',
+            'company_name'
         )
 
     def create(self, validated_data):
         vacancy = Vacancy.objects.create(
             author=self.context.get('request').user,
+            company_name=validated_data.pop('company_name'),
             name=validated_data.pop('name'),
             text=validated_data.pop('text'),
             salary=validated_data.pop('salary')

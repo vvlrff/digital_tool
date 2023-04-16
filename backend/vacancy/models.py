@@ -46,6 +46,11 @@ class Vacancy(models.Model):
         on_delete=models.CASCADE,
         related_name='vacancy'
     )
+    company_name = models.CharField(
+        'Название компании',
+        max_length=200,
+        help_text='Введите название компании',
+    )
     name = models.CharField(
         'Название вакансии',
         max_length=200,

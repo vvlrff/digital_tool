@@ -1,65 +1,64 @@
 from django.db import models
-from django.core.exceptions import ValidationError
-
-
-def validateQuestionType(value):
-    if value not in ['TEXT', 'CHOICE', 'MULTIPLE_CHOICE']:
-        raise ValidationError('Invalid question type')
-
-
-OPTION_TYPES = ['CHOICE', 'MULTIPLE_CHOICE']
 
 
 class Poll(models.Model):
-    'Опрос'
+    """Тест"""
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=300)
     startDate = models.DateField()
     finishDate = models.DateField()
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Опрос'
+
 
 class Question(models.Model):
-    'Вопрос'
-    poll = models.ForeignKey('Poll', on_delete=models.CASCADE)
-    type = models.CharField(max_length=30, validators=[validateQuestionType])
+    """Вопрос"""
+    poll = models.ForeignKey(Poll,
+                             on_delete=models.CASCADE)
     text = models.CharField(max_length=300)
-    points = models.FloatField()
+    max_points = models.FloatField()
 
-    @property
-    def hasOptionType(self):
-        return self.type in OPTION_TYPES
+    class Meta:
+        verbose_name = 'Вопрос'
+
+    def __str__(self):
+        return self.text
 
 
 class Option(models.Model):
-    'Вариант ответа'
+    """Вариант ответа"""
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
     index = models.PositiveIntegerField()
     text = models.CharField(max_length=100)
-    max_points = models.FloatField()
+    points = models.FloatField()
+
+    class Meta:
+        verbose_name = 'Вариант ответа'
+
+    def __str__(self):
+        return self.text
 
 
 class Submission(models.Model):
-    'Заполненный опрос'
+    """Заполненный опрос"""
     user_id = models.IntegerField(db_index=True)
     poll = models.ForeignKey('Poll', on_delete=models.CASCADE)
     submitTime = models.DateTimeField(auto_now_add=True)
 
-# При записи ответа на вопрос мы копируем тип и текст вопроса.
-# Также копируется текст вариантов ответа (для соотв. вопросов).
-# Это позволит сохранить вопросы и варианты ответов такими,
-# какими они были на момент прохождения опроса.
+    class Meta:
+        verbose_name = 'Заполненный опрос'
 
 
 class Answer(models.Model):
-    'Ответ на вопрос'
+    """Ответ на вопрос"""
     submission = models.ForeignKey('Submission', on_delete=models.CASCADE)
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
-    questionType = models.CharField(max_length=30,
-                                    validators=[validateQuestionType])
-    questionText = models.CharField(max_length=300)
-    answerText = models.CharField(max_length=300)
+    choice = models.ForeignKey('Option', on_delete=models.CASCADE,
+                               null=True, default=1)
 
-
-# Обновить структуру таблиц:
-# python manage.py makemigrations backend
-# python manage.py migrate
+    class Meta:
+        verbose_name = 'Ответ на вопрос'

@@ -5,9 +5,8 @@ from .models import Question, Answer, Poll, Option, Submission
 class QuestionAdmin(admin.ModelAdmin):
     list_display = (
         'poll',
-        'type',
         'text',
-        'points',
+        'max_points',
     )
 
 
@@ -25,7 +24,7 @@ class OptionAdmin(admin.ModelAdmin):
         'question',
         'index',
         'text',
-        'max_points',
+        'points',
     )
     list_filter = ('question',)
 
@@ -34,9 +33,7 @@ class AnswerAdmin(admin.ModelAdmin):
     list_display = (
         'submission',
         'question',
-        'questionType',
-        'questionText',
-        'answerText',
+        'choice',
     )
     list_filter = ('submission',)
 
