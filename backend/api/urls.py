@@ -8,7 +8,7 @@ app_name = 'api'
 router = DefaultRouter()
 
 router.register('skills', views.SkillsViewSet, basename='skills')
-router.register('busyness', views.SkillsViewSet, basename='busyness')
+router.register('busyness', views.BusynessViewSet, basename='busyness')
 router.register('vacancy', views.VacancyViewSet, basename='vacancy')
 
 
